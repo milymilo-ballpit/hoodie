@@ -15,6 +15,7 @@ django-ipware = "*"
 django-json-widget = "*"
 django-debug-toolbar = "*"
 django-crispy-forms = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
