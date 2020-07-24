@@ -72,6 +72,10 @@ const getWebGL = async () => {
   const gl =
     canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
 
+  if (!gl) {
+    return {};
+  }
+
   const getUnmaskedInfo = () => {
     const unMaskedInfo = {
       renderer: "",
@@ -114,8 +118,11 @@ const getNavigator = async () => {
 };
 
 const getBattery = async () => {
-  const bm = await navigator.getBattery();
+  if (!navigator.hasOwnProperty("getBattery")) {
+    return {};
+  }
 
+  const bm = await navigator.getBattery();
   return {
     charging: bm.charging,
     level: bm.level,
