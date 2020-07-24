@@ -12,8 +12,13 @@ const getScreenData = async () => {
 };
 
 const getIPData = async () => {
-  const res = await fetch("https://ipapi.co/json");
-  const data = await res.json();
+  let data;
+  try {
+    const res = await fetch("https://ipapi.co/json");
+    data = await res.json();
+  } catch (err) {
+    return {};
+  }
 
   return {
     address: data.ip,
