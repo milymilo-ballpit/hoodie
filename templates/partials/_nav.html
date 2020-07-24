@@ -1,0 +1,36 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand"
+       href="#">Hoodie</a>
+    <button class="navbar-toggler"
+            data-toggle="collapse"
+            data-target="#navbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar"
+         class="collapse navbar-collapse">
+
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link"
+             href="{% url 'app:link_list' %}">Links</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             href="{% url 'app:create_link' %}">New Link</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link"
+             href="{% url 'admin:index' %}">Admin</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>

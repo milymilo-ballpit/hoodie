@@ -1,0 +1,10 @@
+<table class="table table-bordered table-hover">
+  <tbody>
+    {% for key, value in data.items %}
+    <tr>
+      <th class="text-capitalize">{{ key }}: </th>
+      <td>{{ value }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

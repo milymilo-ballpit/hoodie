@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>{% block title %} {% endblock title %} | Hoodie</title>
+  {% block head %} {% endblock head %}
+  <link rel="stylesheet"
+        href="{% static 'css/bootstrap.min.css' %}">
+
+</head>
+
+<body>
+  {% include "partials/_nav.html" %}
+
+  <div class="container my-4">
+    {% block body %} {% endblock body %}
+  </div>
+
+  <script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  {% block scripts %}{% endblock scripts %}
+</body>
+
+</html>

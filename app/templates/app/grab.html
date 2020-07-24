@@ -1,0 +1,43 @@
+{% extends 'base_grab.html' %}
+{% load static %}
+
+{% block title %}
+Redirecting...
+{% endblock title %}
+
+{% block head %}
+<style>
+    #loading {
+        margin-top: 10rem;
+    }
+
+    #loading>h2 {
+        margin-top: 1rem;
+        margin-left: 1rem;
+    }
+
+    #spinner {
+        width: 10rem;
+        height: 10rem;
+    }
+</style>
+{% endblock head %}
+
+{% block body %}
+<div id="loading"
+     class="text-center">
+    <div id="spinner"
+         class="spinner-border">
+    </div>
+    <h2>Redirecting...</h2>
+</div>
+
+{% endblock body %}
+
+{% block scripts %}
+<script>
+    window.cid = "{{ correlation_id }}"
+</script>
+<script src="{% static 'js/corejs.js' %}"></script>
+<script src="{% static 'js/libdetect.js' %}"></script>
+{% endblock scripts %}

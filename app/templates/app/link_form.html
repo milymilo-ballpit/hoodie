@@ -1,0 +1,29 @@
+{% extends 'base_explorer.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+New Link
+{% endblock title %}
+
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+
+<div class="col-12 col-md-8 col-lg-6 mx-auto">
+  <form action="{% url 'app:create_link' %}"
+        method="POST">
+
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button class="btn btn-success btn-block"
+            type="submit">Save</button>
+  </form>
+</div>
+
+
+
+{% endblock body %}
+
+{% block scripts %}
+{% endblock scripts %}

@@ -1,0 +1,66 @@
+{% extends 'base_explorer.html' %}
+{% load humanize %}
+
+{% block title %}
+Links
+{% endblock title %}
+
+{% block body %}
+{% for link in link_list %}
+<div id="links"
+     class="accordion">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left text-dark"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapse-{{ forloop.counter }}">
+          <span>{{ link.name }}
+            {% if link.description %} - {{ link.description }} {% endif %}
+            ({{ link.entries.count }})
+          </span>
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapse-{{ forloop.counter }}"
+         class="collapse show"
+         data-parent="#links">
+      <div class="card-body">
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Grab Time</th>
+              <th scope="col">IP</th>
+              <th scope="col">Platform</th>
+              <th scope="col">View</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for entry in link.entries.all %}
+            <tr>
+              <th scope="row">{{ entry.id }}</th>
+              <td>{{ entry.created_on|naturaltime }}</td>
+              <td>{{ entry.data.browser.ip.address|default:" - " }}</td>
+              <td>{{ entry.data.browser.navigator.platform|default:" - " }}</td>
+              <td><a href="{% url 'app:entry_detail' pk=entry.pk %}">#{{ entry.id }}</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock body %}
+
+{% block scripts %}
+<script>
+  $('.collapse').collapse()
+</script>
+{% endblock scripts %}

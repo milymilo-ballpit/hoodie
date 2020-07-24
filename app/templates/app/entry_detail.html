@@ -1,0 +1,212 @@
+{% extends 'base_explorer.html' %}
+{% load humanize %}
+
+{% block title %}
+Entry #{{ entry.id }}
+{% endblock title %}
+
+{% block head %}
+<style>
+  pre {
+    background-color: rgba(0, 0, 0, .075);
+    padding: 1em 3em;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+  }
+</style>
+{% endblock head %}
+
+{% block body %}
+<div class="accordion"
+     id="entry-data">
+
+  {% comment %} META {% endcomment %}
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0">
+        <button class="btn btn-link text-dark btn-block text-left"
+                type="button"
+                data-toggle="collapse"
+                data-target="#meta-data">
+          Meta Data
+        </button>
+      </h2>
+    </div>
+
+    <div id="meta-data"
+         class="collapse"
+         data-parent="#entry-data">
+      <div class="card-body">
+        <table class="table table-hover table-bordered">
+          <tbody>
+            <tr>
+              <th>Link: </th>
+              <td>/{{ entry.link }}</td>
+            </tr>
+            <tr>
+              <th>Has Browser Data?</th>
+              <td>{{ entry.has_browser_data }}</td>
+            </tr>
+            <tr>
+              <th>Correlation ID:</th>
+              <td>{{ entry.correlation_id }}</td>
+            </tr>
+            <tr>
+              <th>Grabbed on:</th>
+              <td>{{ entry.created_on }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} IP {% endcomment %}
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0">
+        <button class="btn btn-link text-dark btn-block text-left"
+                type="button"
+                data-toggle="collapse"
+                data-target="#ip-data">
+          IP Data
+        </button>
+      </h2>
+    </div>
+
+    <div id="ip-data"
+         class="collapse"
+         data-parent="#entry-data">
+      <div class="card-body">
+        {% include "partials/_table.html" with data=entry.data.browser.ip %}
+      </div>
+    </div>
+  </div>
+
+  {% comment %} HTTP {% endcomment %}
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0">
+        <button class="btn btn-link text-dark btn-block text-left"
+                type="button"
+                data-toggle="collapse"
+                data-target="#http-data">
+          Headers
+        </button>
+      </h2>
+    </div>
+
+    <div id="http-data"
+         class="collapse"
+         data-parent="#entry-data">
+      <div class="card-body">
+        {% include "partials/_table.html" with data=entry.data.headers %}
+        <hr class="bg-danger">
+
+        <h5>Cookies: </h5>
+        <ul class="list-group list-group text-wrap">
+          {% for value in entry.data.cookies %}
+          <li class="list-group-item">{{ value }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} Browser {% endcomment %}
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0">
+        <button class="btn btn-link text-dark btn-block text-left"
+                type="button"
+                data-toggle="collapse"
+                data-target="#browser-data">
+          Browser Data
+        </button>
+      </h2>
+    </div>
+
+    <div id="browser-data"
+         class="collapse"
+         data-parent="#entry-data">
+      <div class="card-body">
+        <h5>Screen: </h5>
+        {% include "partials/_table.html" with data=entry.data.browser.screen %}
+        <hr class="bg-danger">
+
+        <h5>Navigator: </h5>
+        {% include "partials/_table.html" with data=entry.data.browser.navigator %}
+        <hr class="bg-danger">
+
+        <h5>WebGL: </h5>
+        {% include "partials/_table.html" with data=entry.data.browser.webgl %}
+        <hr class="bg-danger">
+
+        <h5>Battery: </h5>
+        {% include "partials/_table.html" with data=entry.data.browser.battery %}
+        <hr class="bg-danger">
+
+        <h5>Permissions: </h5>
+        {% include "partials/_table.html" with data=entry.data.browser.permissions %}
+        <hr class="bg-danger">
+      </div>
+    </div>
+  </div>
+
+  {% comment %} Clipboard {% endcomment %}
+  {% if entry.data.browser.clipboard.ok %}
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0">
+        <button class="btn btn-link text-dark btn-block text-left"
+                type="button"
+                data-toggle="collapse"
+                data-target="#clipboard-data">
+          Clipboard
+        </button>
+      </h2>
+    </div>
+
+    <div id="clipboard-data"
+         class="collapse"
+         data-parent="#entry-data">
+      <div class="card-body">
+        <pre>
+          {{ entry.data.browser.clipboard.content }}
+        </pre>
+
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% comment %} Precise GEO {% endcomment %}
+  {% if entry.data.browser.preciseGeo.ok %}
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0">
+        <button class="btn btn-link text-dark btn-block text-left"
+                type="button"
+                data-toggle="collapse"
+                data-target="#geo-data">
+          Precise GEO Data (Browser)
+        </button>
+      </h2>
+    </div>
+
+    <div id="geo-data"
+         class="collapse"
+         data-parent="#entry-data">
+      <div class="card-body">
+        <h5>Coordinates: </h5>
+        {% include "partials/_table.html" with data=entry.data.browser.preciseGeo.coords %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock body %}
+
+{% block scripts %}
+{% endblock scripts %}
