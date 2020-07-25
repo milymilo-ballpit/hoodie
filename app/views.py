@@ -2,7 +2,7 @@ import json
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.serializers.json import DjangoJSONEncoder
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -14,8 +14,21 @@ from ipware import get_client_ip
 from .models import Link, Entry
 
 
+class IndexRedirectView(View):
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect("app:link_list")
+
+        raise Http404()
+
+
 class EntryDetailView(LoginRequiredMixin, DetailView):
     model = Entry
+
+    def get(self, request, *args, **kwargs):
+        request.session['focused_link'] = self.get_object().link.pk
+        return super().get(request, args, kwargs)
 
 
 class LinkUpdateView(LoginRequiredMixin, UpdateView):

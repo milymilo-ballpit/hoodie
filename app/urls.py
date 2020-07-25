@@ -1,10 +1,11 @@
 from django.urls import path
-from .views import GrabView, GrabAjaxView, LinkListView, EntryDetailView, CreateLinkView
+from .views import GrabView, GrabAjaxView, LinkListView, EntryDetailView, CreateLinkView, IndexRedirectView
 
 app_name = 'app'
 
 urlpatterns = [
     # link explorer
+    path("", IndexRedirectView.as_view(), name="index"),
     path("l/", LinkListView.as_view(), name="link_list"),
     path("c/", CreateLinkView.as_view(), name="create_link"),
     path("e/<int:pk>", EntryDetailView.as_view(), name="entry_detail"),

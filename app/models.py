@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 class Link(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
-    inbound = models.CharField(max_length=100)
+    inbound = models.CharField(max_length=100, unique=True)
     outbound = models.URLField()
     created_on = models.DateTimeField(auto_now_add=True, blank=True)
 

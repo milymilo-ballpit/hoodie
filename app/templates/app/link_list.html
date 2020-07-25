@@ -25,7 +25,7 @@ Links
     </div>
 
     <div id="collapse-{{ forloop.counter }}"
-         class="collapse show"
+         class="collapse {% if request.session.focused_link == link.pk %}show{% endif %}"
          data-parent="#links">
       <div class="card-body">
         <table class="table text-center">
@@ -58,9 +58,3 @@ Links
 
 </div>
 {% endblock body %}
-
-{% block scripts %}
-<script>
-  $('.collapse').collapse()
-</script>
-{% endblock scripts %}
