@@ -9,6 +9,8 @@ from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.views.decorators.csrf import csrf_exempt
 
+from ua_parser import user_agent_parser
+from ipware import get_client_ip
 from .models import Link, Entry
 
 
@@ -48,6 +50,12 @@ class GrabView(View):
                 continue
 
             data["headers"][key] = request.headers[key]
+
+        ip, _ = get_client_ip(request, request_header_order=['X-Real-IP'])
+        data['ipAddress'] = ip
+        data['userAgent'] = user_agent_parser.Parse(
+            data['headers'].get("User-Agent", "")
+        )
 
         entry = Entry(link=link, data=data)
         entry.save()

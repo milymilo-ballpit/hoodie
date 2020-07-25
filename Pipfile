@@ -16,6 +16,7 @@ django-json-widget = "*"
 django-debug-toolbar = "*"
 django-crispy-forms = "*"
 gunicorn = "*"
+ua-parser = "*"
 
 [requires]
 python_version = "3.7"

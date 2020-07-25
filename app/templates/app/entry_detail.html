@@ -22,16 +22,7 @@ Entry #{{ entry.id }}
 
   {% comment %} META {% endcomment %}
   <div class="card">
-    <div class="card-header">
-      <h2 class="mb-0">
-        <button class="btn btn-link text-dark btn-block text-left"
-                type="button"
-                data-toggle="collapse"
-                data-target="#meta-data">
-          Meta Data
-        </button>
-      </h2>
-    </div>
+    {% include "app/partials/_card_header.html" with name="Meta Data" %}
 
     <div id="meta-data"
          class="collapse"
@@ -61,46 +52,34 @@ Entry #{{ entry.id }}
     </div>
   </div>
 
-  {% comment %} IP {% endcomment %}
+  {% comment %} User Agent {% endcomment %}
+  {% if entry.data.userAgent|length > 0 %}
   <div class="card">
-    <div class="card-header">
-      <h2 class="mb-0">
-        <button class="btn btn-link text-dark btn-block text-left"
-                type="button"
-                data-toggle="collapse"
-                data-target="#ip-data">
-          IP Data
-        </button>
-      </h2>
-    </div>
+    {% include "app/partials/_card_header.html" with name="User Agent" %}
 
-    <div id="ip-data"
+    <div id="user-agent"
          class="collapse"
          data-parent="#entry-data">
       <div class="card-body">
-        {% include "partials/_table.html" with data=entry.data.browser.ip %}
+        {% include "app/partials/_subsection.html" with data=entry.data.userAgent.os name="OS" %}
+        {% include "app/partials/_subsection.html" with data=entry.data.userAgent.device name="Device" %}
+        {% include "app/partials/_subsection.html" with data=entry.data.userAgent.browser name="Browser" %}
       </div>
     </div>
   </div>
+  {% endif %}
 
   {% comment %} HTTP {% endcomment %}
+  {% if entry.data.headers|length > 0 %}
   <div class="card">
-    <div class="card-header">
-      <h2 class="mb-0">
-        <button class="btn btn-link text-dark btn-block text-left"
-                type="button"
-                data-toggle="collapse"
-                data-target="#http-data">
-          Headers
-        </button>
-      </h2>
-    </div>
+    {% include "app/partials/_card_header.html" with name="HTTP Data" %}
 
     <div id="http-data"
          class="collapse"
          data-parent="#entry-data">
       <div class="card-body">
-        {% include "partials/_table.html" with data=entry.data.headers %}
+        <h5>Headers: </h5>
+        {% include "app/partials/_table.html" with data=entry.data.headers %}
         <hr class="bg-danger">
 
         <h5>Cookies: </h5>
@@ -112,69 +91,55 @@ Entry #{{ entry.id }}
       </div>
     </div>
   </div>
+  {% endif %}
+
+  {% comment %} IP {% endcomment %}
+  {% if entry.data.browser.ip|length > 0 %}
+  <div class="card">
+    {% include "app/partials/_card_header.html" with name="Browser IP Data" %}
+
+    <div id="browser-ip-data"
+         class="collapse"
+         data-parent="#entry-data">
+      <div class="card-body">
+        {% include "app/partials/_table.html" with data=entry.data.browser.ip %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
 
   {% comment %} Browser {% endcomment %}
+  {% if entry.has_browser_data %}
   <div class="card">
-    <div class="card-header">
-      <h2 class="mb-0">
-        <button class="btn btn-link text-dark btn-block text-left"
-                type="button"
-                data-toggle="collapse"
-                data-target="#browser-data">
-          Browser Data
-        </button>
-      </h2>
-    </div>
+    {% include "app/partials/_card_header.html" with name="Browser Data" %}
 
     <div id="browser-data"
          class="collapse"
          data-parent="#entry-data">
       <div class="card-body">
-        <h5>Screen: </h5>
-        {% include "partials/_table.html" with data=entry.data.browser.screen %}
-        <hr class="bg-danger">
-
-        <h5>Navigator: </h5>
-        {% include "partials/_table.html" with data=entry.data.browser.navigator %}
-        <hr class="bg-danger">
-
-        <h5>WebGL: </h5>
-        {% include "partials/_table.html" with data=entry.data.browser.webgl %}
-        <hr class="bg-danger">
-
-        <h5>Battery: </h5>
-        {% include "partials/_table.html" with data=entry.data.browser.battery %}
-        <hr class="bg-danger">
-
-        <h5>Permissions: </h5>
-        {% include "partials/_table.html" with data=entry.data.browser.permissions %}
-        <hr class="bg-danger">
+        {% include "app/partials/_subsection.html" with data=entry.data.browser.screen name="Screen" %}
+        {% include "app/partials/_subsection.html" with data=entry.data.browser.navigator name="Navigator" %}
+        {% include "app/partials/_subsection.html" with data=entry.data.browser.webgl name="WebGL" %}
+        {% include "app/partials/_subsection.html" with data=entry.data.browser.battery name="Battery" %}
+        {% include "app/partials/_subsection.html" with data=entry.data.browser.permissions name="Permissions" %}
       </div>
     </div>
   </div>
+  {% endif %}
 
   {% comment %} Clipboard {% endcomment %}
   {% if entry.data.browser.clipboard.ok %}
   <div class="card">
-    <div class="card-header">
-      <h2 class="mb-0">
-        <button class="btn btn-link text-dark btn-block text-left"
-                type="button"
-                data-toggle="collapse"
-                data-target="#clipboard-data">
-          Clipboard
-        </button>
-      </h2>
-    </div>
+    {% include "app/partials/_card_header.html" with name="Clipboard" %}
 
-    <div id="clipboard-data"
+    <div id="clipboard"
          class="collapse"
          data-parent="#entry-data">
       <div class="card-body">
         <pre>
           {{ entry.data.browser.clipboard.content }}
         </pre>
-
       </div>
     </div>
   </div>
@@ -183,23 +148,14 @@ Entry #{{ entry.id }}
   {% comment %} Precise GEO {% endcomment %}
   {% if entry.data.browser.preciseGeo.ok %}
   <div class="card">
-    <div class="card-header">
-      <h2 class="mb-0">
-        <button class="btn btn-link text-dark btn-block text-left"
-                type="button"
-                data-toggle="collapse"
-                data-target="#geo-data">
-          Precise GEO Data (Browser)
-        </button>
-      </h2>
-    </div>
+    {% include "app/partials/_card_header.html" with name="Precise GEO Data" %}
 
-    <div id="geo-data"
+    <div id="precise-geo-data"
          class="collapse"
          data-parent="#entry-data">
       <div class="card-body">
         <h5>Coordinates: </h5>
-        {% include "partials/_table.html" with data=entry.data.browser.preciseGeo.coords %}
+        {% include "app/partials/_table.html" with data=entry.data.browser.preciseGeo.coords %}
       </div>
     </div>
   </div>

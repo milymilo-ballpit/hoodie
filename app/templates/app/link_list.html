@@ -34,7 +34,7 @@ Links
               <th scope="col">#</th>
               <th scope="col">Grab Time</th>
               <th scope="col">IP</th>
-              <th scope="col">Platform</th>
+              <th scope="col">OS</th>
               <th scope="col">View</th>
             </tr>
           </thead>
@@ -42,9 +42,9 @@ Links
             {% for entry in link.entries.all %}
             <tr>
               <th scope="row">{{ entry.id }}</th>
-              <td>{{ entry.created_on|naturaltime }}</td>
-              <td>{{ entry.data.browser.ip.address|default:" - " }}</td>
-              <td>{{ entry.data.browser.navigator.platform|default:" - " }}</td>
+              <td>{{ entry.created_on }}</td>
+              <td>{{ entry.data.ipAddress|default:" - " }}</td>
+              <td>{{ entry.data.userAgent.os.family|default:" - " }}</td>
               <td><a href="{% url 'app:entry_detail' pk=entry.pk %}">#{{ entry.id }}</a></td>
             </tr>
             {% endfor %}
