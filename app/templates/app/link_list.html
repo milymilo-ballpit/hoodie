@@ -10,9 +10,9 @@ Links
 <div id="links"
      class="accordion">
   <div class="card">
-    <div class="card-header">
+    <div class="card-header bg-dark">
       <h2 class="mb-0">
-        <button class="btn btn-link btn-block text-left text-dark"
+        <button class="btn btn-link btn-block text-left text-light text-capitalize"
                 type="button"
                 data-toggle="collapse"
                 data-target="#collapse-{{ forloop.counter }}">
@@ -43,9 +43,19 @@ Links
             <tr>
               <th scope="row">{{ entry.id }}</th>
               <td>{{ entry.created_on }}</td>
-              <td>{{ entry.data.ipAddress|default:" - " }}</td>
+              <td>
+                {% if entry.data.ipinfo.country %}
+                <span class="flag-icon flag-icon-{{ entry.data.ipinfo.country|lower }}"></span>
+                {% endif %}
+                {{ entry.data.ipinfo.ip|default:" - " }}
+
+              </td>
               <td>{{ entry.data.userAgent.os.family|default:" - " }}</td>
-              <td><a href="{% url 'app:entry_detail' pk=entry.pk %}">#{{ entry.id }}</a></td>
+              <td>
+                <a href="{% url 'app:entry_detail' pk=entry.pk %}">
+                  <i class="gg-arrow-right-o mx-auto text-success"></i>
+                </a>
+              </td>
             </tr>
             {% endfor %}
           </tbody>

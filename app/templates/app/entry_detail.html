@@ -63,7 +63,7 @@ Entry #{{ entry.id }}
       <div class="card-body">
         {% include "app/partials/_subsection.html" with data=entry.data.userAgent.os name="OS" %}
         {% include "app/partials/_subsection.html" with data=entry.data.userAgent.device name="Device" %}
-        {% include "app/partials/_subsection.html" with data=entry.data.userAgent.browser name="Browser" %}
+        {% include "app/partials/_subsection.html" with data=entry.data.userAgent.user_agent name="Browser" is_last=True %}
       </div>
     </div>
   </div>
@@ -94,20 +94,26 @@ Entry #{{ entry.id }}
   {% endif %}
 
   {% comment %} IP {% endcomment %}
-  {% if entry.data.browser.ip|length > 0 %}
+  {% if entry.data.ipinfo|length > 0 %}
   <div class="card">
-    {% include "app/partials/_card_header.html" with name="Browser IP Data" %}
+    {% include "app/partials/_card_header.html" with name="IP Data" %}
 
-    <div id="browser-ip-data"
+    <div id="ip-data"
          class="collapse"
          data-parent="#entry-data">
       <div class="card-body">
-        {% include "app/partials/_table.html" with data=entry.data.browser.ip %}
+        <h5>General: </h5>
+        {% include "app/partials/_table.html" with data=entry.data.ipinfo %}
+        <hr class="bg-danger">
+
+        {% include "app/partials/_subsection.html" with data=entry.data.ipinfo.asn name="ASN Data" %}
+        {% include "app/partials/_subsection.html" with data=entry.data.ipinfo.company name="Company Data" %}
+        {% include "app/partials/_subsection.html" with data=entry.data.ipinfo.carrier name="Carrier Data" %}
+        {% include "app/partials/_subsection.html" with data=entry.data.ipinfo.privary name="Privacy Data" %}
       </div>
     </div>
   </div>
   {% endif %}
-
 
   {% comment %} Browser {% endcomment %}
   {% if entry.has_browser_data %}
@@ -122,7 +128,7 @@ Entry #{{ entry.id }}
         {% include "app/partials/_subsection.html" with data=entry.data.browser.navigator name="Navigator" %}
         {% include "app/partials/_subsection.html" with data=entry.data.browser.webgl name="WebGL" %}
         {% include "app/partials/_subsection.html" with data=entry.data.browser.battery name="Battery" %}
-        {% include "app/partials/_subsection.html" with data=entry.data.browser.permissions name="Permissions" %}
+        {% include "app/partials/_subsection.html" with data=entry.data.browser.permissions name="Permissions" is_last=True %}
       </div>
     </div>
   </div>

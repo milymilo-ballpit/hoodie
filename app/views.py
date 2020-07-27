@@ -11,7 +11,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from ua_parser import user_agent_parser
 from ipware import get_client_ip
+
 from .models import Link, Entry
+from .utils import get_ip_data
 
 
 class IndexRedirectView(View):
@@ -50,11 +52,13 @@ class GrabView(View):
         link = get_object_or_404(Link, inbound=self.kwargs['inbound'])
 
         data = {
+            "ipinfo": {},
             "headers": {},
             "cookies": [],
-            "browser": {}
+            "browser": {},
         }
 
+        # Headers
         for key in request.headers:
             if key == "Cookie":
                 data["cookies"] = list(map(
@@ -64,8 +68,12 @@ class GrabView(View):
 
             data["headers"][key] = request.headers[key]
 
+        # IP Data
         ip, _ = get_client_ip(request, request_header_order=['X-Real-IP'])
-        data['ipAddress'] = ip
+        if ip:
+            data['ipinfo'] = get_ip_data(ip)
+
+        # User-Agent
         data['userAgent'] = user_agent_parser.Parse(
             data['headers'].get("User-Agent", "")
         )

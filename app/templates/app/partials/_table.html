@@ -1,10 +1,16 @@
+{% load util %}
+
 <table class="table table-bordered table-hover">
   <tbody>
     {% for key, value in data.items %}
+
+    {% if value|get_type != "dict" %}
     <tr>
-      <th class="text-capitalize">{{ key }}: </th>
+      <th class="text-capitalize">{{ key|prettify }}: </th>
       <td>{{ value }}</td>
     </tr>
+    {% endif %}
+
     {% endfor %}
   </tbody>
 </table>

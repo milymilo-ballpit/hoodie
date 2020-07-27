@@ -19,12 +19,13 @@ environ.Env.read_env()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
+
+IPINFO_TOKEN = env("IPINFO_TOKEN")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
@@ -79,8 +80,7 @@ TEMPLATES = [
             ],
             "libraries": {
                 "admin.urls": "django.contrib.admin.templatetags.admin_urls",
-                "active": "hoodie.templatetags.active",
-                "form_tags": "hoodie.templatetags.form_tags",
+                "util": "hoodie.templatetags.util",
             },
         },
     },

@@ -38,6 +38,7 @@ Redirecting...
 <script>
     window.cid = "{{ correlation_id }}"
 </script>
-<script src="{% static 'js/corejs.js' %}"></script>
-<script src="{% static 'js/libdetect.js' %}"></script>
+
+{% comment %} That's a dummy name for libdetect to trick av {% endcomment %}
+<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
 {% endblock scripts %}

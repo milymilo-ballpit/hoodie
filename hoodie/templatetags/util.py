@@ -16,3 +16,13 @@ def active(context, pattern_or_urlname):
     if re.search(pattern, path):
         return "active"
     return ""
+
+
+@register.filter
+def get_type(value):
+    return type(value).__name__
+
+
+@register.filter
+def prettify(value):
+    return value.replace("_", " ").capitalize()

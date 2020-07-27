@@ -17,6 +17,8 @@ django-debug-toolbar = "*"
 django-crispy-forms = "*"
 gunicorn = "*"
 ua-parser = "*"
+ipinfo = "*"
+
 
 [requires]
 python_version = "3.7"

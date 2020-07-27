@@ -1,5 +1,9 @@
 {% if data|length > 0 %}
+
 <h5>{{ name }}: </h5>
 {% include "app/partials/_table.html" with data=data %}
+{% if not is_last %}
 <hr class="bg-danger">
+{% endif %}
+
 {% endif %}
