@@ -11,29 +11,6 @@ const getScreenData = async () => {
   return data;
 };
 
-const getIPData = async () => {
-  let data;
-  try {
-    const res = await fetch("https://ipapi.co/json");
-    data = await res.json();
-  } catch (err) {
-    return {};
-  }
-
-  return {
-    address: data.ip,
-    asn: data.asn,
-    org: data.org,
-    city: data.city,
-    postal: data.postal,
-    region: data.region,
-    latitude: data.latitude,
-    longitude: data.longitude,
-    timezone: data.timezone,
-    utcOffset: data.utc_offset,
-  };
-};
-
 const getPermissions = async () => {
   const permissionList = [
     "accelerometer",
@@ -142,7 +119,6 @@ const detect = async () => {
   const data = {
     permissions: permissions,
     screen: await getScreenData(),
-    ip: await getIPData(),
     webgl: await getWebGL(),
     navigator: await getNavigator(),
     battery: await getBattery(),
@@ -180,7 +156,6 @@ const detect = async () => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-
   const json = await res.json();
   window.location = json.forward;
 })();
