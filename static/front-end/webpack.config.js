@@ -65,7 +65,7 @@ module.exports = {
         numbersToExpressions: true,
         controlFlowFlattening: true,
       },
-      ["vendor.js"]
+      ["vendor.min.js"]
     ),
   ],
 };
