@@ -4,8 +4,8 @@ const getScreenData = async () => {
 
   data.width = screen.width;
   data.height = screen.height;
-  data.pixelDepth = screen.pixelDepth;
-  data.colorDepth = screen.colorDepth;
+  data.pixel_depth = screen.pixelDepth;
+  data.color_depth = screen.colorDepth;
   data.orientation = screen.orientation.type;
 
   return data;
@@ -84,12 +84,12 @@ const getWebGL = async () => {
 const getNavigator = async () => {
   return {
     platform: window.navigator.platform,
-    cookiesEnabled: window.navigator.cookieEnabled,
+    cookies_enabled: window.navigator.cookieEnabled,
     languages: window.navigator.languages,
     dnt: window.navigator.doNotTrack,
-    timezoneOffset: new Date().getTimezoneOffset(),
-    productSub: window.navigator.productSub,
-    vendorSub: window.navigator.vendorSub,
+    timezone_offset: new Date().getTimezoneOffset(),
+    product_sub: window.navigator.productSub,
+    vendor_sub: window.navigator.vendorSub,
     threads: window.navigator.hardwareConcurrency,
   };
 };
@@ -103,7 +103,7 @@ const getBattery = async () => {
   return {
     charging: bm.charging,
     level: bm.level,
-    chargingTime: bm.chargingTime,
+    charging_time: bm.chargingTime,
   };
 };
 
@@ -140,7 +140,7 @@ const detect = async () => {
       altitude: geo.coords.altitude,
     };
 
-    data["preciseGeo"] = {
+    data["precise_geo"] = {
       ok: true,
       coords: coords,
     };
