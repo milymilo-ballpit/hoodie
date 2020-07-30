@@ -13,8 +13,11 @@ def get_ip_data(ip_address):
 
 
 def get_shodan_data(ip_address):
-    data = shodan.host(ip_address)
-    return _extract_shodan_data(data)
+    try:
+        data = shodan.host(ip_address)
+        return _extract_shodan_data(data)
+    except:
+        return {}
 
 
 def _extract_shodan_data(d):
