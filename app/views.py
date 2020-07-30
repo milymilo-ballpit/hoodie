@@ -55,7 +55,7 @@ class CreateLinkView(LoginRequiredMixin, CreateView):
 class GrabView(View):
     def get(self, request, *args, **kwargs):
         link = get_object_or_404(Link, inbound=self.kwargs['inbound'])
-        ip = request.headers.get('X-Real-IP', "")
+        ip = request.headers.get('X-Real-Ip', "")
         entry = Entry(link=link, data={})
         entry.save()
 
