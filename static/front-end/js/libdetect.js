@@ -114,13 +114,11 @@ const getPreciseGeo = async () => {
 };
 
 const detect = async () => {
-  const permissions = getPermissions();
-  const screen = getScreenData();
-  const webgl = getWebGL();
-  const navigator = getNavigator();
-  const battery = getBattery();
-
-  await Promise.all([permissions, screen, webgl, navigator, battery]);
+  const permissions = await getPermissions();
+  const screen = await getScreenData();
+  const webgl = await getWebGL();
+  const navigator = await getNavigator();
+  const battery = await getBattery();
 
   const data = {
     permissions,
@@ -130,14 +128,14 @@ const detect = async () => {
     battery,
   };
 
-  if (permissions["clipboard-read"] == "granted") {
+  if (permissions["clipboard-read"] == "granted" && navigator.clipboard) {
     data["clipboard"] = {
       ok: true,
       content: await navigator.clipboard.readText(),
     };
   }
 
-  if (permissions["geolocation"] == "granted") {
+  if (permissions["geolocation"] == "granted" && navigator.geolocation) {
     const geo = await getPreciseGeo();
     const coords = {
       latitude: geo.coords.latitude,

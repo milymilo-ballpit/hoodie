@@ -11,8 +11,6 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.views.decorators.csrf import csrf_exempt
 
 import django_rq
-from ipware import get_client_ip
-
 from .models import Link, Entry
 from .jobs import parse_data
 
@@ -57,7 +55,7 @@ class CreateLinkView(LoginRequiredMixin, CreateView):
 class GrabView(View):
     def get(self, request, *args, **kwargs):
         link = get_object_or_404(Link, inbound=self.kwargs['inbound'])
-        ip, _ = get_client_ip(request, request_header_order=['X-Real-IP'])
+        ip = request.headers.get('X-Real-IP', "")
         entry = Entry(link=link, data={})
         entry.save()
 

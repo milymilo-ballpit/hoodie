@@ -37,5 +37,8 @@ def parse_data(entry_pk, data):
     )
 
     entry = Entry.objects.get(pk=entry_pk)
+    if entry.data.get('browser', None) is not None:
+        parsed['browser'] = entry.data['browser']
+
     entry.data = parsed
     entry.save()
