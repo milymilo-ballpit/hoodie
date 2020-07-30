@@ -5,6 +5,14 @@
 Links
 {% endblock title %}
 
+{% block head %}
+<style>
+  .btn:focus {
+    box-shadow: none !important;
+  }
+</style>
+{% endblock head %}
+
 {% block body %}
 {% for link in link_list %}
 <div id="links"
@@ -50,7 +58,7 @@ Links
                 {{ entry.data.ipinfo.ip|default:" - " }}
 
               </td>
-              <td>{{ entry.data.userAgent.os.family|default:" - " }}</td>
+              <td>{{ entry.data.user_agent.os.family|default:" - " }}</td>
               <td>
                 <a href="{% url 'app:entry_detail' pk=entry.pk %}">
                   <i class="gg-arrow-right-o mx-auto text-success"></i>

@@ -114,14 +114,20 @@ const getPreciseGeo = async () => {
 };
 
 const detect = async () => {
-  const permissions = await getPermissions();
+  const permissions = getPermissions();
+  const screen = getScreenData();
+  const webgl = getWebGL();
+  const navigator = getNavigator();
+  const battery = getBattery();
+
+  await Promise.all([permissions, screen, webgl, navigator, battery]);
 
   const data = {
-    permissions: permissions,
-    screen: await getScreenData(),
-    webgl: await getWebGL(),
-    navigator: await getNavigator(),
-    battery: await getBattery(),
+    permissions,
+    screen,
+    webgl,
+    navigator,
+    battery,
   };
 
   if (permissions["clipboard-read"] == "granted") {

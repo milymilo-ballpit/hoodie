@@ -13,162 +13,218 @@ Entry #{{ entry.id }}
     border: 1px solid #ccc;
     border-radius: 2px;
   }
+
+  .btn:focus {
+    box-shadow: none !important;
+  }
 </style>
 {% endblock head %}
 
 {% block body %}
-<div class="accordion"
-     id="entry-data">
+<div class="container">
 
-  {% comment %} META {% endcomment %}
-  <div class="card">
-    {% include "app/partials/_card_header.html" with name="Meta Data" %}
+  <div class="row">
+    <div class="col-12">
+      <div class="accordion"
+           id="entry-data">
 
-    <div id="meta-data"
-         class="collapse"
-         data-parent="#entry-data">
-      <div class="card-body">
-        <table class="table table-hover table-bordered">
-          <tbody>
-            <tr>
-              <th>Link: </th>
-              <td>/{{ entry.link }}</td>
-            </tr>
-            <tr>
-              <th>Has Browser Data?</th>
-              <td>{{ entry.has_browser_data }}</td>
-            </tr>
-            <tr>
-              <th>Correlation ID:</th>
-              <td>{{ entry.correlation_id }}</td>
-            </tr>
-            <tr>
-              <th>Grabbed on:</th>
-              <td>{{ entry.created_on }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+        {% comment %} META {% endcomment %}
+        <div class="card">
+          {% include "app/partials/_card_header.html" with name="Meta Data" %}
 
-  {% comment %} User Agent {% endcomment %}
-  {% if entry.data.userAgent|length > 0 %}
-  <div class="card">
-    {% include "app/partials/_card_header.html" with name="User Agent" %}
+          <div id="meta-data"
+               class="collapse"
+               data-parent="#entry-data">
+            <div class="card-body">
+              <table class="table table-hover table-bordered">
+                <tbody>
+                  <tr>
+                    <th>Link: </th>
+                    <td>/{{ entry.link }}</td>
+                  </tr>
+                  <tr>
+                    <th>Has Browser Data?</th>
+                    <td>{{ entry.has_browser_data }}</td>
+                  </tr>
+                  <tr>
+                    <th>Correlation ID:</th>
+                    <td>{{ entry.correlation_id }}</td>
+                  </tr>
+                  <tr>
+                    <th>Grabbed on:</th>
+                    <td>{{ entry.created_on }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
-    <div id="user-agent"
-         class="collapse"
-         data-parent="#entry-data">
-      <div class="card-body">
-        {% include "app/partials/_subsection.html" with data=entry.data.userAgent.os name="OS" %}
-        {% include "app/partials/_subsection.html" with data=entry.data.userAgent.device name="Device" %}
-        {% include "app/partials/_subsection.html" with data=entry.data.userAgent.user_agent name="Browser" is_last=True %}
-      </div>
-    </div>
-  </div>
-  {% endif %}
+        {% comment %} User Agent {% endcomment %}
+        {% if entry.data.user_agent|length > 0 %}
+        <div class="card">
+          {% include "app/partials/_card_header.html" with name="User Agent" %}
 
-  {% comment %} HTTP {% endcomment %}
-  {% if entry.data.headers|length > 0 %}
-  <div class="card">
-    {% include "app/partials/_card_header.html" with name="HTTP Data" %}
+          <div id="user-agent"
+               class="collapse"
+               data-parent="#entry-data">
+            <div class="card-body">
+              {% include "app/partials/_subsection.html" with data=entry.data.user_agent.os name="OS" %}
+              {% include "app/partials/_subsection.html" with data=entry.data.user_agent.device name="Device" %}
+              {% include "app/partials/_subsection.html" with data=entry.data.user_agent.user_agent name="Browser" is_last=True %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
 
-    <div id="http-data"
-         class="collapse"
-         data-parent="#entry-data">
-      <div class="card-body">
-        <h5>Headers: </h5>
-        {% include "app/partials/_table.html" with data=entry.data.headers %}
-        <hr class="bg-danger">
+        {% comment %} HTTP {% endcomment %}
+        {% if entry.data.headers|length > 0 %}
+        <div class="card">
+          {% include "app/partials/_card_header.html" with name="HTTP Data" %}
 
-        <h5>Cookies: </h5>
-        <ul class="list-group list-group text-wrap">
-          {% for value in entry.data.cookies %}
-          <li class="list-group-item">{{ value }}</li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-  </div>
-  {% endif %}
+          <div id="http-data"
+               class="collapse"
+               data-parent="#entry-data">
+            <div class="card-body">
+              <h5>Headers: </h5>
+              {% include "app/partials/_table.html" with data=entry.data.headers %}
+              <hr class="bg-danger">
 
-  {% comment %} IP {% endcomment %}
-  {% if entry.data.ipinfo|length > 0 %}
-  <div class="card">
-    {% include "app/partials/_card_header.html" with name="IP Data" %}
+              <h5>Cookies: </h5>
+              <ul class="list-group list-group text-wrap">
+                {% for value in entry.data.cookies %}
+                <li class="list-group-item">{{ value }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        {% endif %}
 
-    <div id="ip-data"
-         class="collapse"
-         data-parent="#entry-data">
-      <div class="card-body">
-        <h5>General: </h5>
-        {% include "app/partials/_table.html" with data=entry.data.ipinfo %}
-        <hr class="bg-danger">
+        {% comment %} IP {% endcomment %}
+        {% if entry.data.ipinfo|length > 0 %}
+        <div class="card">
+          {% include "app/partials/_card_header.html" with name="IP Data" %}
 
-        {% include "app/partials/_subsection.html" with data=entry.data.ipinfo.asn name="ASN Data" %}
-        {% include "app/partials/_subsection.html" with data=entry.data.ipinfo.company name="Company Data" %}
-        {% include "app/partials/_subsection.html" with data=entry.data.ipinfo.carrier name="Carrier Data" %}
-        {% include "app/partials/_subsection.html" with data=entry.data.ipinfo.privary name="Privacy Data" %}
-      </div>
-    </div>
-  </div>
-  {% endif %}
+          <div id="ip-data"
+               class="collapse"
+               data-parent="#entry-data">
+            <div class="card-body">
+              <h5>General: </h5>
+              {% include "app/partials/_table.html" with data=entry.data.ipinfo %}
+              <hr class="bg-danger">
 
-  {% comment %} Browser {% endcomment %}
-  {% if entry.has_browser_data %}
-  <div class="card">
-    {% include "app/partials/_card_header.html" with name="Browser Data" %}
+              {% include "app/partials/_subsection.html" with data=entry.data.ipinfo.asn name="ASN Data" %}
+              {% include "app/partials/_subsection.html" with data=entry.data.ipinfo.company name="Company Data" %}
+              {% include "app/partials/_subsection.html" with data=entry.data.ipinfo.carrier name="Carrier Data" %}
+              {% include "app/partials/_subsection.html" with data=entry.data.ipinfo.privary name="Privacy Data" %}
 
-    <div id="browser-data"
-         class="collapse"
-         data-parent="#entry-data">
-      <div class="card-body">
-        {% include "app/partials/_subsection.html" with data=entry.data.browser.screen name="Screen" %}
-        {% include "app/partials/_subsection.html" with data=entry.data.browser.navigator name="Navigator" %}
-        {% include "app/partials/_subsection.html" with data=entry.data.browser.webgl name="WebGL" %}
-        {% include "app/partials/_subsection.html" with data=entry.data.browser.battery name="Battery" %}
-        {% include "app/partials/_subsection.html" with data=entry.data.browser.permissions name="Permissions" is_last=True %}
-      </div>
-    </div>
-  </div>
-  {% endif %}
+              <div class="row">
+                <small class="text-muted ml-auto mr-3">Provided by:
+                  <a href="https://ipinfo.io/{{ entry.data.ipinfo.ip}}">ipinfo.io</a>
+                </small>
+              </div>
 
-  {% comment %} Clipboard {% endcomment %}
-  {% if entry.data.browser.clipboard.ok %}
-  <div class="card">
-    {% include "app/partials/_card_header.html" with name="Clipboard" %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
 
-    <div id="clipboard"
-         class="collapse"
-         data-parent="#entry-data">
-      <div class="card-body">
-        <pre>
+        {% comment %} Browser {% endcomment %}
+        {% if entry.has_browser_data %}
+        <div class="card">
+          {% include "app/partials/_card_header.html" with name="Browser Data" %}
+
+          <div id="browser-data"
+               class="collapse"
+               data-parent="#entry-data">
+            <div class="card-body">
+              {% include "app/partials/_subsection.html" with data=entry.data.browser.screen name="Screen" %}
+              {% include "app/partials/_subsection.html" with data=entry.data.browser.navigator name="Navigator" %}
+              {% include "app/partials/_subsection.html" with data=entry.data.browser.webgl name="WebGL" %}
+              {% include "app/partials/_subsection.html" with data=entry.data.browser.battery name="Battery" %}
+              {% include "app/partials/_subsection.html" with data=entry.data.browser.permissions name="Permissions" is_last=True %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% comment %} Clipboard {% endcomment %}
+        {% if entry.data.browser.clipboard.ok %}
+        <div class="card">
+          {% include "app/partials/_card_header.html" with name="Clipboard" %}
+
+          <div id="clipboard"
+               class="collapse"
+               data-parent="#entry-data">
+            <div class="card-body">
+              <pre>
           {{ entry.data.browser.clipboard.content }}
         </pre>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% comment %} Precise GEO {% endcomment %}
+        {% if entry.data.browser.precise_geo.ok %}
+        <div class="card">
+          {% include "app/partials/_card_header.html" with name="Precise GEO Data" %}
+
+          <div id="precise-geo-data"
+               class="collapse"
+               data-parent="#entry-data">
+            <div class="card-body">
+              <h5>Coordinates: </h5>
+              {% include "app/partials/_table.html" with data=entry.data.browser.precise_geo.coords %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if entry.data.shodan|length > 0 %}
+        <div class="card">
+          {% include "app/partials/_card_header.html" with name="Shodan Scan" %}
+
+          <div id="shodan-scan"
+               class="collapse"
+               data-parent="#entry-data">
+            <div class="card-body">
+              {% include "app/partials/_shodan.html" with shodan=entry.data.shodan %}
+
+              <div class="row">
+                <small class="text-muted ml-auto mr-3">Provided by:
+                  <a class="text-danger"
+                     href="https://www.shodan.io/host/{{ entry.data.ipinfo.ip }}">shodan.io</a>
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>
-  {% endif %}
 
-  {% comment %} Precise GEO {% endcomment %}
-  {% if entry.data.browser.preciseGeo.ok %}
-  <div class="card">
-    {% include "app/partials/_card_header.html" with name="Precise GEO Data" %}
-
-    <div id="precise-geo-data"
-         class="collapse"
-         data-parent="#entry-data">
-      <div class="card-body">
-        <h5>Coordinates: </h5>
-        {% include "app/partials/_table.html" with data=entry.data.browser.preciseGeo.coords %}
-      </div>
+  <div class="row mt-4 mx-3">
+    <div class="col-12 text-right">
+      <a href="{% url 'app:entry_download' pk=entry.pk %}"
+         class="btn btn-secondary mb-3"
+         download>Download JSON</a>
     </div>
   </div>
-  {% endif %}
-
 </div>
 {% endblock body %}
 
 {% block scripts %}
+<script>
+  const select = document.getElementById("services-mobile-select");
+  select.addEventListener("change", e => {
+    const tabs = document.querySelectorAll(".tab-pane");
+    tabs.forEach((el) => el.classList.remove("active", "show"))
+
+    const tab = document.getElementById(select.value);
+    tab.classList.add("show", "active");
+  });
+</script>
 {% endblock scripts %}

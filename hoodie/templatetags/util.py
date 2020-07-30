@@ -24,5 +24,5 @@ def get_type(value):
 
 
 @register.filter
-def prettify(value):
-    return value.replace("_", " ").capitalize()
+def prettify(value, sep="_"):
+    return value.replace(sep, " ").capitalize()

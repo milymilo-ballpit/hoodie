@@ -1,0 +1,88 @@
+{% load util %}
+
+<h5>General: </h5>
+<table class="table table-bordered hover">
+  <tbody>
+    <tr>
+      <th class="text-capitalize">
+        OS:
+      </th>
+      <td>
+        {{ shodan.os|default:"Unknown" }}
+      </td>
+    </tr>
+
+    <tr>
+      <th class="text-capitalize">
+        Open Ports:
+      </th>
+      <td>
+        {% for port in shodan.ports %}
+        <span class="badge badge-secondary">{{ port }}</span>
+        {% endfor %}
+      </td>
+    </tr>
+
+    <tr>
+      <th class="text-capitalize">
+        Domains:
+      </th>
+      <td>
+        {% for domain in shodan.domains %}
+        <span class="badge badge-secondary">{{ domain }}</span>
+        {% endfor %}
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr class="bg-danger">
+
+<h5>Services: </h5>
+<div class="row">
+  <div class="col-md-3">
+    <div class="nav nav-pills flex-column d-none d-md-block"
+         id="services">
+      {% for service in shodan.services %}
+      <a class="nav-link btn btn-outline-secondary text-center my-1"
+         id="services-{{ forloop.counter }}"
+         data-toggle="pill"
+         href="#services-{{ forloop.counter }}-tab">
+        <span class="text-uppercase"> {{ service.module }} ({{service.port}})</span>
+      </a>
+      {% endfor %}
+    </div>
+
+    <select class="custom-select mt-1 d-block d-md-none"
+            id="services-mobile-select">
+
+      {% for service in shodan.services %}
+      <option value="services-{{ forloop.counter }}-tab">{{ service.module }} ({{service.port}})</option>
+      <div class="tab-pane fade">
+        {{ service }}
+      </div>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-md-9">
+    <div class="tab-content my-4 my-md-0"
+         id="services-content">
+
+      {% for service in shodan.services %}
+      <div class="tab-pane fade"
+           id="services-{{ forloop.counter }}-tab">
+        {% include "app/partials/_subsection.html" with data=service name="Scan Data" %}
+
+        {% if service.dns %}
+        {% include "app/partials/_subsection.html" with data=service.dns name="DNS Extra" is_last=True %}
+        {% endif %}
+
+        {% if service.http %}
+        {% include "app/partials/_subsection.html" with data=service.http name="HTTP Extra" is_last=True %}
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>

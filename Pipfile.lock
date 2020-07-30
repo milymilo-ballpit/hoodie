@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "30d5a0b54ed959984c4f2bc2f00f486436c276ef03fb69c662fbe5232147dc48"
+            "sha256": "82d6a29aa59cc2f6906bf218a3c3e01c34e4baf4966c2f0eb247f0e40c6c4391"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -111,6 +111,14 @@
             "index": "pypi",
             "version": "==1.0.1"
         },
+        "django-rq": {
+            "hashes": [
+                "sha256:ee9aefba814ae00b6d6a566ed0cd2a0a090e0e42d90bb9c4f1c70d3cacb47a52",
+                "sha256:f0bd7ac3b8b4b4abb161646e80a8751c81664beaa810e92fdbcf9fb3e7d72727"
+            ],
+            "index": "pypi",
+            "version": "==2.3.2"
+        },
         "future": {
             "hashes": [
                 "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"
@@ -166,6 +174,13 @@
             ],
             "version": "==2020.1"
         },
+        "redis": {
+            "hashes": [
+                "sha256:0e7e0cfca8660dea8b7d5cd8c4f6c5e29e11f31158c0b0ae91a397f00e5a05a2",
+                "sha256:432b788c4530cfe16d8d943a09d40ca6c16149727e4afe8c2c9d5580c59d9f24"
+            ],
+            "version": "==3.5.3"
+        },
         "requests": {
             "hashes": [
                 "sha256:b3559a131db72c33ee969480840fff4bb6dd111de7dd27c8ee1f820f4f00231b",
@@ -173,6 +188,13 @@
             ],
             "index": "pypi",
             "version": "==2.24.0"
+        },
+        "rq": {
+            "hashes": [
+                "sha256:370fc800903c226b898a10174e069a23077b74b22297b4b20e925ca82fcd9471",
+                "sha256:3da8554f3ea2ee9e48d54063ebe1437c6aa743483c1f46d2ad65294ab4e38873"
+            ],
+            "version": "==1.5.0"
         },
         "shodan": {
             "hashes": [

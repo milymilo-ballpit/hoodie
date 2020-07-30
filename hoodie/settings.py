@@ -26,6 +26,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = env("SECRET_KEY")
 
 IPINFO_TOKEN = env("IPINFO_TOKEN")
+GMAPS_TOKEN = env("GMAPS_TOKEN")
+SHODAN_TOKEN = env("SHODAN_TOKEN")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
@@ -44,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_json_widget',
     'crispy_forms',
-    'app'
+    'app',
+    'django_rq'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -96,6 +99,15 @@ DATABASES = {
     "default": env.db("DB_URL"),
 }
 
+# RQ
+# https://github.com/rq/django-rq
+RQ_QUEUES = {
+    'default': {
+        'URL': env("REDIS_URL")
+    }
+}
+
+RQ_SHOW_ADMIN_LINK = True
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import GrabView, GrabAjaxView, LinkListView, EntryDetailView, CreateLinkView, IndexRedirectView
+from .views import GrabView, GrabAjaxView, LinkListView, EntryDetailView, CreateLinkView, IndexRedirectView, DownloadEntryView
 
 app_name = 'app'
 
@@ -9,6 +9,7 @@ urlpatterns = [
     path("l/", LinkListView.as_view(), name="link_list"),
     path("c/", CreateLinkView.as_view(), name="create_link"),
     path("e/<int:pk>", EntryDetailView.as_view(), name="entry_detail"),
+    path("d/<int:pk>.json", DownloadEntryView.as_view(), name="entry_download"),
 
     # ajax grabber input
     path("a/<str:correlation_id>",
