@@ -24,9 +24,10 @@ Links
                 type="button"
                 data-toggle="collapse"
                 data-target="#collapse-{{ forloop.counter }}">
-          <span>{{ link.name }}
-            {% if link.description %} - {{ link.description }} {% endif %}
-            ({{ link.entries.count }})
+          <span>
+              <span class="text-lowercase">{{ link.inbound }} &rarr; {{ link.outbound }}</span>
+            {% if link.name %} - {{ link.name }} {% endif %}
+            ({{ link.entries.count }} Entries)
           </span>
         </button>
       </h2>

@@ -1,8 +1,6 @@
 import json
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.serializers.json import DjangoJSONEncoder
-from django.forms.models import model_to_dict
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
@@ -10,7 +8,6 @@ from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.views.decorators.csrf import csrf_exempt
 
-import django_rq
 from .models import Link, Entry
 from .jobs import parse_data
 
@@ -40,7 +37,7 @@ class DownloadEntryView(LoginRequiredMixin, View):
 
 class LinkUpdateView(LoginRequiredMixin, UpdateView):
     model = Link
-    fields = ['name', 'description', 'inbound', 'outbound']
+    fields = ['name', 'inbound', 'outbound']
 
 
 class LinkListView(LoginRequiredMixin, ListView):
@@ -49,7 +46,7 @@ class LinkListView(LoginRequiredMixin, ListView):
 
 class CreateLinkView(LoginRequiredMixin, CreateView):
     model = Link
-    fields = ['name', 'description', 'inbound', 'outbound']
+    fields = ['name', 'inbound', 'outbound']
 
 
 class GrabView(View):

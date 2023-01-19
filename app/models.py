@@ -1,15 +1,15 @@
 import uuid
 
-from django.contrib.postgres.fields import JSONField
+from django.db.models import JSONField
 from django.db import models
 from django.urls import reverse_lazy
 
 
 class Link(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
-    description = models.TextField(null=True, blank=True)
-    inbound = models.CharField(max_length=100, unique=True)
-    outbound = models.URLField()
+    inbound = models.CharField(max_length=100, unique=True, help_text="Path on the host without the initial and final "
+                                                                      "slashes (e.g. some/path)")
+    outbound = models.URLField(help_text="Full URL to redirect to (e.g. https://google.com)")
     created_on = models.DateTimeField(auto_now_add=True, blank=True)
 
     class Meta:
@@ -19,7 +19,7 @@ class Link(models.Model):
         return reverse_lazy("app:link_list")
 
     def __str__(self):
-        return self.name
+        return f"{self.inbound} -> {self.outbound}"
 
 
 class Entry(models.Model):
@@ -31,7 +31,7 @@ class Entry(models.Model):
         default=uuid.uuid4, null=False, blank=True
     )
     created_on = models.DateTimeField(auto_now_add=True, blank=True)
-    data = JSONField()
+    data = JSONField(null=True, blank=True)
 
     class Meta:
         ordering = ['-created_on']
