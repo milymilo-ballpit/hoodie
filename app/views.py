@@ -1,5 +1,6 @@
 import json
 
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404
@@ -23,6 +24,11 @@ class IndexRedirectView(View):
 
 class EntryDetailView(LoginRequiredMixin, DetailView):
     model = Entry
+
+    def get_context_data(self, **kwargs):
+        context = super(EntryDetailView, self).get_context_data(**kwargs)
+        context['GMAPS_TOKEN'] = settings.GMAPS_TOKEN
+        return context
 
     def get(self, request, *args, **kwargs):
         request.session['focused_link'] = self.get_object().link.pk

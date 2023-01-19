@@ -112,6 +112,28 @@ Entry #{{ entry.id }}
             <div class="card-body">
               <h5>General: </h5>
               {% include "app/partials/_table.html" with data=entry.data.ipinfo %}
+
+                {% if entry.data.ipinfo.loc %}
+                    <iframe
+                        width="1038"
+                        height="450"
+                        frameborder="0" style="border:0"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps/embed/v1/place?key={{ GMAPS_TOKEN }}&q={{ entry.data.ipinfo.loc }}"
+                        allowfullscreen>
+                    </iframe>
+
+                    <iframe
+                        width="1038"
+                        height="450"
+                        frameborder="0" style="border:0"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps/embed/v1/place?key={{ GMAPS_TOKEN }}&q={{ entry.data.ipinfo.loc }}&zoom=18&maptype=satellite"
+                        allowfullscreen>
+                    </iframe>
+                {% endif %}
+
+
               <hr class="bg-danger">
 
               {% include "app/partials/_subsection.html" with data=entry.data.ipinfo.asn name="ASN Data" %}
