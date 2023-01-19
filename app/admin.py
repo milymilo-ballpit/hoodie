@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.contrib.postgres import fields
+from django.db import models
 from django.db.models import Count
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -10,7 +10,7 @@ from .models import Link, Entry
 
 class EntryInline(admin.StackedInline):
     formfield_overrides = {
-        fields.JSONField: {'widget': JSONEditorWidget},
+        models.JSONField: {'widget': JSONEditorWidget},
     }
 
     model = Entry
@@ -44,7 +44,7 @@ class LinkAdmin(admin.ModelAdmin):
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
     formfield_overrides = {
-        fields.JSONField: {'widget': JSONEditorWidget},
+        models.JSONField: {'widget': JSONEditorWidget},
     }
 
     list_display = (
